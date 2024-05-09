@@ -1,0 +1,27 @@
+/** @format */
+
+.ticket-list {
+	max-width: 1300px; /* adjust the width as needed */
+	margin: 0 auto; /* center the list horizontally */
+	padding: 0;
+	list-style: none;
+}
+
+.ticket-list li {
+	padding: 1rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.ticket-list li:last-child {
+	border-bottom: none;
+}
+
+.ticket-list li h3 {
+	font-weight: bold;
+	font-size: 1.2rem;
+}
+
+.ticket-list li p {
+	font-size: 1rem;
+	color: #666;
+}

@@ -1,0 +1,27 @@
+/**
+ * TicketForm.css
+ *
+ * @format
+ */
+
+input[type="text"],
+input[type="date"],
+textarea {
+	background-color: #333; /* Dark background for input fields */
+	border: none;
+	color: white; /* White text color */
+	margin-bottom: 1rem;
+}
+.formcontainer {
+	padding-top: 50px;
+}
+input[type="text"]::placeholder,
+input[type="date"]::placeholder,
+textarea::placeholder {
+	color: #ccc; /* Lighter placeholder text */
+}
+
+.btn-primary {
+	background-color: #ff4500; /* Orange button color */
+	border: none;
+}

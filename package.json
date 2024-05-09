@@ -1,6 +1,7 @@
 {
 	"devDependencies": {
-		"concurrently": "^8.2.2"
+		"concurrently": "^8.2.2",
+		"nodemon": "^3.1.0"
 	},
 	"scripts": {
 		"start": "concurrently \"npm run start --prefix server\" \"npm run start --prefix client\""

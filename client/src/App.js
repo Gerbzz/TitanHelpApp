@@ -1,66 +1,37 @@
 /** @format */
 
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+// App.js
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import TicketForm from "./components/TicketForm/TicketForm"; // Adjust the path according to your structure
+import TicketList from "./components/TicketList/TicketList";
+import "./App.css";
 
-function App() {
+const App = () => {
 	const [tickets, setTickets] = useState([]);
-	const [formData, setFormData] = useState({
-		name: "",
-		problemDescription: "",
-	});
 
 	useEffect(() => {
-		fetchTickets();
+		fetch("http://localhost:5001/api/tickets")
+			.then((response) => response.json())
+			.then((data) => setTickets(data));
 	}, []);
 
-	const fetchTickets = async () => {
-		const result = await axios.get("/api/tickets");
-		setTickets(result.data);
-	};
+	const handleCreateTicket = async (ticketData) => {
+		const response = await fetch("http://localhost:5001/api/tickets", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(ticketData),
+		});
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-		try {
-			const response = await axios.post("/api/tickets", formData);
-			setTickets([...tickets, response.data]);
-			setFormData({ name: "", problemDescription: "" }); // Clear form
-		} catch (error) {
-			console.error("Failed to create ticket:", error);
-		}
+		const newTicket = await response.json();
+		setTickets([...tickets, newTicket]);
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
-				<input
-					type='text'
-					value={formData.name}
-					onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-					placeholder='Name'
-					required
-				/>
-				<textarea
-					value={formData.problemDescription}
-					onChange={(e) =>
-						setFormData({ ...formData, problemDescription: e.target.value })
-					}
-					placeholder='Problem Description'
-					required
-				/>
-				<button type='submit'>Create Ticket</button>
-			</form>
-			<ul>
-				{tickets.map((ticket) => (
-					<li key={ticket._id}>
-						{ticket.name} - {ticket.problemDescription}
-					</li>
-				))}
-			</ul>
+		<div className='custom-background'>
+			<TicketForm onCreateTicket={handleCreateTicket} />
+			<TicketList tickets={tickets} />
 		</div>
 	);
-}
+};
 
 export default App;
